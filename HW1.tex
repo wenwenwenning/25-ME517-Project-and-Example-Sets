@@ -1,0 +1,271 @@
+\documentclass{elsarticle}
+\input{instr-preamble}
+\input{instr-mathsymbols}
+
+\title{Your Paper}
+\author{You}
+
+\begin{document}
+\begin{center}
+    517 Mechanics of Soft Material HW1\\
+    26311207 Wen-Ning, Wan
+\end{center}
+\section{Project I: Topic ID and Overview}
+\subsection{Statement of Research Interest}
+Shape memory polymers (SMPs) are a class of smart soft materials capable of storing a temporary shape and recovering their original geometry under specific thermal conditions. Their lightweight and flexible nature makes them attractive for applications in mechanical and biomedical systems, such as deployable structures and self-healing materials. Despite their promise, SMPs have not yet achieved widespread adoption, largely due to the high cost and uncertainty in their fabrication. Current manufacturing approaches, such as direct ink writing and stereolithography, are both expensive and highly customized, often requiring trial-and-error to achieve the desired shape memory behavior.
+
+I am interested in solving the problem by combining additive manufacturing of SMPs with deep learning–based inverse design. I propose to investigate honeycomb-structured SMPs as a model system. Training datasets are collected from experiments. By parameterizing geometric features (e.g., cell size, wall thickness) and process variables during fabrication, I aim to develop a predictive framework that connects these inputs to the homogenized mechanical response of the printed structure. Importantly, the models will be able to predict a time and temperature-dependent recovery behavior, which remains underexplored in current literature. This would enable prediction not only of deformation under load but also of the recovery pathway during thermal cycling.
+
+\subsection{Intellectual Merit}
+The main goal of the demonstration is to show the possibility of deep learning optimizing the design and fabrication of shape memory polymers (SMPs) by combining experimental data with physically informed constraints. Instead of relying solely on numerical fitting, the framework will integrate continuum mechanics principles to ensure that model predictions retain physical meaning. The predicted outputs will include the stretch ratio and the displacement field of the printed samples. During training, the model will also incorporate temperature-dependent information, enabling it to capture and predict the recovery process of SMPs across different thermal states.
+
+Background from this course, particularly topics on finite viscoelasticity and large deformation mechanics, will directly inform the construction of penalty functions used in training. Understanding the time-dependent ODEs will strongly benefit the reliability of forming the penalty function. Besides, experimental techniques are also critical, since we will need them to construct the experiment samples, and the validate the displacement field for the dataset.
+
+\subsection{Broader Impact}
+Advancing predictive frameworks for shape memory polymers (SMPs) not only consider the effect of the geometry factor, but also include the factors during manufacturing. This thoughtfulness could directly benefit fields such as biomechanics and aerospace, where precision and reliability are critical. In biomedical applications, SMP-based artificial tissues would require accurate prediction of deformation and recovery as body temperature changes, ensuring safety and functionality. In aerospace, SMPs as self-healing components could extend the lifespan of vehicles by repairing damage under controlled thermal conditions. A “winning scenario” is one where deep learning–guided design reduces manufacturing uncertainty, enabling cost-effective, reliable SMP products that transform industries reliant on adaptive, lightweight, and resilient soft materials.
+\newpage
+\section{Examples I. Mathematical Preliminaries}
+\subsection{Convolutional integrals}
+Convolutional integral gives that:
+\begin{equation*}
+    (f*g)(t) = \int_{0}^{t} f(\tau) g(t-\tau)\mathrm{d}\tau
+\end{equation*}
+Let
+\begin{equation*}
+g(t) = J(t) = J_\infty+(J_0-J_\infty)e^{\frac{-t}{\tau_c}}
+f(t)=\frac{\partial\sigma(t)}{\partial t}
+\end{equation*}
+(a) For $\sigma_1(t)
+$ \begin{align*}
+&f(t)=\frac{\partial\sigma_0H(t)}{\partial t}=\sigma_0\delta(t)\\
+&\mathcal{L}\{(f*g)(t)\}=F(s)\cdot G(s)\\
+&F(s)=\mathcal{L}\{f(t)\}=\sigma_0\cdot1=\sigma_0\\
+&G(s)=\mathcal{L}\{g(t)\}=\frac{J_\infty}{s}+(J_0-J_\infty)\frac{1}{s+\frac{1}{\tau_c}}\\
+&\mathcal{L}\{(f*g)(t)\}=\sigma_0(\frac{J_\infty}{s}+(J_0-J_\infty)\frac{1}{s+\frac{1}{\tau_c}})\\
+&\mathcal{L}\{\varepsilon_1 (t)\}=\frac{\sigma_0 J_\infty}{s}+\frac{\sigma_0(J_0-J_\infty)\tau_c}{s\tau_c+1}
+\end{align*}
+(b) For $\sigma_2(t)$
+\begin{align*}
+&f(t)=\frac{\partial\sigma_0 sin(\omega t)}{\partial t}=\sigma_0\omega cos(\omega t)\\
+&F(s)=\mathcal{L}\{f(t)\}=\sigma_0\omega\frac{s}{s^2+\omega^2}\\
+&G(s)=\mathcal{L}\{g(t)\}=\frac{J_\infty}{s}+(J_0-J_\infty)\frac{1}{s+\frac{1}{\tau_c}}\\
+&\mathcal{L}\{(f*g)(t)\}=\frac{\sigma_0\omega s}{s^2+\omega^2}(\frac{J_\infty}{s}+(J_0-J_\infty)\frac{1}{s+\frac{1}{\tau_c}})\\
+&\mathcal{L}\{\varepsilon_2 (t)\}=\frac{\sigma_0\omega s}{s^2+\omega^2}(\frac{J_\infty}{s}+(J_0-J_\infty)\frac{1}{s+\frac{1}{\tau_c}})\\
+\end{align*}
+\newpage
+\subsection{Index notation}
+(1)
+\begin{align*}
+&\bm{p}\times(\bm{q}\times\bm{r})\\
+&=p_i\bm{e}_i\times(q_j\bm{e}_j\times r_k\bm{e}_k)\\
+&=p_i\bm{e}_i\times(\varepsilon_{pjk}q_jr_k\bm{e}_p)\\
+&=p_iq_jr_k\varepsilon_{pjk}(\bm{e}_i\times\bm{e_p})\\
+&=p_iq_jr_k\varepsilon_{pjk}\varepsilon_{qip}\bm{e}_q\\
+&=p_iq_jr_k(\delta_{jq}\delta_{ki}-\delta_{ji}\delta_{kq})\bm{e}_q\\
+&=(p_kq_qr_k-p_jq_jr_q)\bm{e}_q\\
+&=(\bm{r}\cdot\bm{p})\bm{q}-(\bm{q}\cdot\bm{p})\bm{r}
+\end{align*}
+(2)
+\begin{align*}
+&(\bm{p}\times\bm{q})\cdot(\bm{a}\times\bm{b})\\
+&=(p_iq_j\varepsilon_{ijk}\bm{e}_k)\cdot(a_xb_y\varepsilon_{xyz}\bm{e}_z)\\
+&=p_iq_ja_xb_y\varepsilon_{ijk}\varepsilon_{xyz}(\bm{e}_k\cdot\bm{e}_z)\\
+&=p_iq_ja_xb_y\delta_{kz}(\varepsilon_{ijk}\varepsilon_{xyz})\\
+&=p_iq_ja_xb_y\varepsilon_{zij}\varepsilon_{zxy}\\
+&=p_iq_ja_xb_y(\delta_{ix}\delta_{jy}-\delta_{iy}\delta_{xj})\\
+&=(\bm{p}\cdot\bm{a})(\bm{q}\cdot\bm{b})-(\bm{p}\cdot\bm{b})(\bm{q}\cdot\bm{a})\\
+\end{align*}
+(3)
+\begin{align*}
+    &(\bm{a}\otimes\bm{b})(\bm{p}\otimes\bm{q})\\
+    &\text{Let} \quad\bm{u}\quad \text{be any vector}\\
+    &\Rightarrow (\bm{a}\otimes\bm{b})(\bm{p}\otimes\bm{q})\bm{u}\\
+    &=(\bm{a}\otimes\bm{b})\bm{p}(\bm{q}\cdot\bm{u})\\
+    &=\bm{a}(\bm{b}\cdot\bm{p})({\bm{q}\cdot\bm{u}})\\
+    &=(\bm{b}\cdot\bm{p})(\bm{a}\otimes\bm{q})\bm{u}\\
+    &\Rightarrow(\bm{a}\otimes\bm{b})(\bm{p}\otimes\bm{q}) = (\bm{b}\cdot\bm{p})(\bm{a}\otimes\bm{q})
+\end{align*}
+(4)
+\begin{align*}
+&(\mathbf{Q^T}\bm{a})\cdot(\mathbf{Q^T}\bm{b})\\
+&=\bm{b}\cdot(\mathbf{Q}\mathbf{Q^T}\bm{a})\\
+&=\bm{b}\cdot\bm{a}\\
+&=\bm{a}\cdot\bm{b}
+\end{align*}
+
+\subsection{Tensors and vector}
+\begin{align*}
+    &\bm{u}=(\bm{u}\cdot\bm{n})\bm{n}+\bm{n}\times(\bm{u}\times\bm{n})\\
+    &\text{Using identities} \quad (\bm{p}\otimes\bm{q})\bm{u}=\bm{p}(\bm{q}\cdot\bm{u})\quad\text{and}\quad \bm{p}\times(\bm{q}\times\bm{r})=(\bm{r}\cdot\bm{p})\bm{q}-(\bm{q}\cdot\bm{p})\bm{r}\\
+    &\bm{u}=(\bm{n}\otimes\bm{n})\bm{u}+(\bm{n}\cdot\bm{n})\bm{u}-(\bm{n}\otimes\bm{n})\bm{u}\\
+    &\Rightarrow\bm{u}=(\mathbf{P}^{\parallel}_{\bm{n}}+\mathbf{P}^{\perp}_{\bm{n}})\bm{u}=\mathbf{I}\bm{u}
+\end{align*}
+\subsection{Vector and tensor calculus}
+(1) 
+\begin{align*}
+    &\nabla_{\bm{X}}\times(\phi\bm{a})\\
+    &=(\bm{e}_i\partial_i)\times(\phi a_j\bm{e}_j)\\
+    &=\partial_i(\phi a_j)(\bm{e}_i\times\bm{e}_j)\\
+    &=(\phi_{,i}a_j+\phi a_{j,i})\varepsilon_{ijk}\bm{e}_k\\
+    &=\varepsilon_{ijk}\phi_{,i}a_j\bm{e}_k+\varepsilon_{ijk}\phi a_{j.i}\bm{e}_k\\
+    &=(\nabla_{\bm{X}}\phi)\times\bm{a}+\phi\nabla_{\bm{X}}\times\bm{a}
+\end{align*}
+(2)
+\begin{align*}
+    \nabla_{\bm{X}}(\bm{a}\cdot\bm{b})&=(\bm{a}\cdot\nabla_{\bm{X}})\bm{b}+(\bm{b}\cdot\nabla_{\bm{X}})\bm{a}+\bm{a}\times(\nabla_{\bm{X}}\times\bm{b})+\bm{b}\times(\nabla_{\bm{X}}\times\bm{a})\\
+    &=a_j\partial_jb_i+b_k\partial_ka_i+a_mb_m\partial_i-a_n\partial_nb_i+b_ma_m\partial_i-b_n\partial_na_i\\
+    &=a_m\partial_ib_m + b_m\partial_ia_m\\
+    &=\partial_i(a_m b_m)\\
+    &=\nabla_{\bm{X}}(\bm{a}\cdot\bm{b})
+\end{align*}
+(3)
+\begin{align*}
+    &(\mathbf{A}\mathbf{B})\mathbf{:}\mathbf{C}\\
+    &=A_{ik}B_{kl}(\bm{e}_i\otimes\bm{e}_l)\mathbf{:}C_{mn}(\bm{e}_m\otimes\bm{e}_n)\\
+    &=A_{ik}B_{kl}C_{mn}\delta_{im}\delta_{ln}\\
+    &=A_{ik}B_{kl}C_{il}\\
+    &\\
+    &(\mathbf{A}^T\mathbf{C})\mathbf{:}\mathbf{B}\\
+    &=(A_{ij}(\bm{e}_j\otimes\bm{e}_i)\cdot C_{mn}(\bm{e}_m\times\bm{e}_n))\mathbf{:}B_{kl}(\bm{e}_k\otimes\bm{e}_l)\\
+    &=A_{ij}C_{mn}B_{kl}\delta_{im}\delta_{jk}\delta_{nl}\\
+    &=A_{ik}C_{il}B_{kl}\\
+    &=(\mathbf{A}\mathbf{B})\mathbf{:}\mathbf{C}\\
+    &\\
+    &(\mathbf{C}\mathbf{B}^T)\mathbf{:}\mathbf{A}\\
+    &=(C_{mn}(\bm{e}_m\otimes\bm{e}_n)\cdot B_{kl}(\bm{e}_l\otimes\bm{e}_k))\mathbf{A}\\
+    &=C_{mn}B_{kl}\delta_{nl}(\bm{e}_m\otimes\bm{e}_k)\mathbf{:}A_{ij}(\bm{e}_i\otimes\bm{e}_j)\\
+    &=C_{mn}B_{kl}A_{ij}\delta_{nl}\delta_{mi}\delta_{kj}\\
+    &=C_{il}B_{kl}A_{ik}\\
+    &=(\mathbf{A}\mathbf{B})\mathbf{:}\mathbf{C}
+\end{align*}
+
+(4)
+From Jacobi's formula, we know
+\begin{align*}
+    &\delta(det(\mathbf{F}))=det(\mathbf{F})tr(\mathbf{F}^{-1}\delta\mathbf{F})\\
+    &\Rightarrow\delta(J)=J(F^{-1})_{ij}\delta F_{ji}\\
+\end{align*}
+Partial derivative yields
+\begin{align*}
+    &\delta(J)=\frac{\partial J}{\partial F_{ij}}\delta F_{ij}\\
+    &\Rightarrow\frac{\partial J}{\partial F_{ij}}=J(F^{-1})_{ji}=J(F^{-T})_{ij}
+\end{align*}
+
+\subsection{Kinematics}
+(a)
+Assume that the material is homogeneous and independent of the position. Under pure tension and compression loading, no shear occurs in the material.
+\begin{equation*}
+    \bm{x}(\bm{X},t)=
+\begin{bmatrix}
+x_1 \\
+x_2 \\
+x_3
+\end{bmatrix}
+=\begin{bmatrix}
+\lambda_1(t)\bm{X}_1 \\
+\lambda_2(t)\bm{X}_2 \\
+\lambda_3(t)\bm{X}_3
+\end{bmatrix}
+\end{equation*}
+From the loading condition, we get that
+\begin{align*}
+    \lambda_1(t)=1-\beta sin(\omega t)\\
+    \lambda_2(t)=1+\frac{\alpha}{2}sin(\omega t)\\
+    \lambda_3(t)=1-\beta sin(\omega t)\\
+\end{align*}
+We construct the deformation gradient $\bm{F}(t)$
+\begin{equation*}
+    \bm{F}(t)=
+    \begin{bmatrix}
+        1-\beta sin(\omega t) & 0 & 0\\
+        0 & 1+\frac{\alpha}{2}sin(\omega t) & 0\\
+        0 & 0 & 1-\beta sin(\omega t)
+    \end{bmatrix}
+\end{equation*}
+(b)
+Assign the direction of the small fiber $\bm{n}$ with an oriented angle $\theta$ about $\bm{e}_1$
+\begin{equation*}
+    \bm{n}=\begin{bmatrix}
+        cos\theta\\
+        0\\
+        sin\theta
+    \end{bmatrix}
+\end{equation*}
+Find the stretch ratio of the small fiber
+\begin{align*}
+    \lambda=\bm{n}\cdot\mathbf{C}\bm{n}
+\end{align*}
+where $\mathbf{C}$ is the Right Cauchy-Green tensor
+\begin{equation*}
+\mathbf{C}=\mathbf{F}^{T}\mathbf{F}=\mathbf{U}^2=
+    \begin{bmatrix}
+    \lambda_1^2&0&0\\
+    0&\lambda_2^2&0\\
+    0&0&\lambda_3^2\\
+    \end{bmatrix}
+\end{equation*}
+Getting the total stretch
+\begin{align*}
+    \lambda&=\sqrt{(cos\theta,0,sin\theta)\cdot(\lambda_1^2cos\theta,0,\lambda_3^2sin\theta)}\\
+    &=\sqrt{\lambda_1^2cos^2\theta+\lambda^2_3sin^2\theta}\\
+    &=1-\beta sin(\omega t)
+\end{align*}
+(c)
+\begin{equation*}
+\mathbf{E}=\frac{1}{2}(\mathbf{F}^T\mathbf{F}-\mathbf{I})
+\end{equation*}
+\begin{equation*}
+    =\begin{bmatrix}
+        \frac{1}{2}(1-\beta sin(\omega t))^2-\frac{1}{2}&0&0\\
+        0&\frac{1}{2}(1+\frac{\alpha}{2} sin(\omega t))^2-\frac{1}{2}&0\\
+        0&0&\frac{1}{2}(1-\beta sin(\omega t))^2-\frac{1}{2}\\
+    \end{bmatrix}
+\end{equation*}
+\begin{equation*}
+    =\begin{bmatrix}
+        \frac{1}{2}\beta^2sin^2(\omega t)-\beta sin(\omega t)&0&0\\
+        0&\frac{1}{8}\alpha^2sin^2(\omega t)+\frac{1}{2}\alpha sin(\omega t)&0\\
+        0&0&\frac{1}{2}\beta^2sin^2(\omega t)-\beta sin(\omega t)\\
+    \end{bmatrix}
+\end{equation*}
+\begin{equation*}
+    \mathbf{E}_H=ln(\mathbf{U})
+\end{equation*}
+\begin{equation*}
+    =\begin{bmatrix}
+        ln(1-\beta sin(\omega t))&0&0\\
+        0&ln(1+\frac{\alpha}{2}sin(\omega t))&0\\
+        0&0&ln(1-\beta sin(\omega t))\\
+    \end{bmatrix}
+\end{equation*}
+
+\begin{align*}
+     \mathbf{E}_1(t)_{max} = \beta+\frac{\beta^2}{2}, \quad \mathbf{E}_1(t)_{min} = -\beta+\frac{\beta^2}{2}\\
+     \mathbf{E}_2(t)_{max} = \frac{\alpha}{2}+\frac{\alpha^2}{8}, \quad \mathbf{E}_2(t)_{min} = -\frac{\alpha}{2}+\frac{\alpha^2}{8}\\
+     \mathbf{E}_3(t)_{max} = \beta+\frac{\beta^2}{2}, \quad \mathbf{E}_3(t)_{min} = -\beta+\frac{\beta^2}{2}\\
+\end{align*}
+\begin{align*}
+    \mathbf{E}_{H1}(t)_{max}=ln(1+\beta),\quad \mathbf{E}_{H1}(t)_{min}=ln(1-\beta)\\
+    \mathbf{E}_{H2}(t)_{max}=ln(1+\frac{\alpha}{2}),\quad \mathbf{E}_{H2}(t)_{min}=ln(1-\frac{\alpha}{2})\\
+\end{align*}
+Calculate the bias of each tensor
+\begin{align*}
+    \mathbf{E}_{bias} = \frac{1}{2}(\mathbf{E}_{max}+\mathbf{E}_{min})=\frac{\beta^2}{2}(for\quad i=1,3), \quad \frac{\alpha^2}{8}(for\quad i=2)\\
+    \mathbf{E}_{Hbias} = \frac{1}{2}(\mathbf{E}_{Hmax}+\mathbf{E}_{Hmin})=\frac{1}{2}ln(1-\beta^2)(for\quad i=1,3), \quad \frac{1}{2}ln(1-\frac{\alpha^2}{4})(for\quad i=2)
+\end{align*}
+Expand $ln(1-x)$ term, we then get
+\begin{equation*}
+    \frac{1}{2}ln(1-\beta^2)=\frac{1}{2}(-\beta^2-\frac{\beta^4}{2}-\frac{\beta^6}{3}\dots)
+\end{equation*}
+As the strain grows, the high-order term of $\mathbf{E}_H$ becomes significant, and the bias of $\mathbf{E}_H$ becomes greater. Therefore, Lagrange-Green strain tensor $\mathbf{E}$ is more symmetric about zero as $\alpha$ gets large.\\
+
+(d)
+\begin{align*}
+    \mathbf{A}(\bm{X_1},t)&=\frac{\partial^2\bm{x}_1}{\partial t^2}\\
+    &=\frac{\partial^2}{\partial^2t}((1-\beta sin(\omega t))\frac{1}{2})\bm{e}_1\\
+    &=\frac{\partial}{\partial t}(\frac{1}{2}(-\omega\beta cos(\omega t))\bm{e}_1\\
+    &=\frac{1}{2}(\omega^2\beta sin(\omega t))\bm{e}_1
+\end{align*}
+
+
+\end{document}
