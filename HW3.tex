@@ -1,0 +1,204 @@
+\documentclass{elsarticle}
+\input{instr-preamble}
+\input{instr-mathsymbols}
+
+\title{Your Paper}
+\author{You}
+
+\begin{document}
+\begin{center}
+    517 Mechanics of Soft Material HW3\\
+    26311207 Wen-Ning, Wan
+\end{center}
+\section{Examples III. Linear Viscoelastic Models}
+\subsection{Converting creep to relaxation}
+(a) Plot $J_c(t)$
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Hw_fig/Fig3_1.png}
+\end{figure}
+\\
+(b) 
+\begin{align*}
+    \mathcal{L}\{J_c(t)\}&=\mathcal{L}\{\frac{\bar{\varepsilon}}{s\bar{\sigma}}\}\\
+    &=\frac{1}{1000}(\frac{10}{s}-\frac{5}{s+\frac{1}{4}}-\frac{3}{s+\frac{1}{8}})\\
+    \frac{\bar{\varepsilon}}{\bar{\sigma}}&=\frac{s}{1000}(\frac{10}{s}-\frac{5}{s+\frac{1}{4}}-\frac{3}{s+\frac{1}{8}})\\
+    \frac{\bar{\sigma}}{\bar{\varepsilon}}&=\frac{1000}{s}(\frac{s(s+\frac{1}{4})(s+\frac{1}{8})}{10(s+\frac{1}{4})(s+\frac{1}{8})-5s(s+\frac{1}{8})-3s(s+\frac{1}{4})})\\
+    \bar{G_r}(s)=\frac{\bar{\sigma}}{s\bar{\varepsilon}}&=\frac{1000}{s}(\frac{s^2+\frac{3}{8}+\frac{1}{32}}{2s^2+\frac{19}{8}s+\frac{10}{32}})\\
+    G_r(t)=100&+390.44e^{-1.037t}+9.56e^{-0.151t}
+\end{align*}
+Creeps happens at $t=4s$, and $t=8s$, while relaxation happens at $t=\frac{1}{1.037}=0.97s$, and $t=\frac{1}{0.151}=6.63s$. Relaxation times are shorter than creep times.
+\subsection{Alternate standard linear solid model}
+(a)\\
+Stress equilibrium and kinematic equilibrium in Kelvin-Voigt model are as follow:
+\begin{align*}
+    \sigma&=\sigma_k=\sigma_s\\
+    \varepsilon&=\varepsilon_k+\varepsilon_s\\
+\end{align*}
+Consitutive law of spring, and Kelvin-Voigt model
+\begin{align*}
+        \sigma_s&=E\varepsilon_s\\
+    \sigma_k&=E_1\varepsilon_k+\eta\dot{\varepsilon}_k
+\end{align*}
+Solve the consititutive law:
+\begin{align*}
+    \sigma&=E_1\varepsilon_k+\eta(\dot{\varepsilon}-\frac{\dot{\sigma}}{E})\\
+    \sigma&=E_1(\varepsilon-\frac{\sigma}{E})+\eta(\dot{\varepsilon}-\frac{\dot{\sigma}}{E})\\
+    \sigma&=E_1\varepsilon-\frac{E_1}{E}\sigma+\eta\dot{\varepsilon}-\frac{\eta}{E}\dot{\sigma}\\
+    (1+\frac{E_1}{E})\sigma&+\frac{\eta}{E}\dot{\sigma}=E_1\varepsilon+\eta\dot{\varepsilon}\\
+    \sigma+\frac{\eta}{E+E_1}&\dot{\sigma}=\frac{E_1E}{E_1+E}\varepsilon+\frac{E\eta}{E+E_1}\dot{\varepsilon}
+\end{align*}
+(b)
+Let $a=\frac{\eta}{E+E_1},b=\frac{E_1E}{E_1+E},c=\frac{E\eta}{E+E_1}$
+\begin{align*}
+    \frac{\bar{\varepsilon}}{s\bar{\sigma}}&=\frac{1+as}{cs^2+bs}\\
+    &=\frac{1}{c}(\frac{A}{s}+\frac{B}{s+\frac{b}{c}})\\
+    &=\frac{1}{c}(\frac{c}{b}\frac{1}{s}+(a-\frac{c}{b})\frac{1}{s+\frac{b}{c}})
+\end{align*}
+\begin{align*}
+    J_c(t)&=\frac{1}{b}+(\frac{a}{c}-\frac{1}{b})e^{-\frac{b}{c}t}\\
+    &=\frac{E+E_1}{EE_1}+(\frac{1}{E}-\frac{E+E_1}{EE_1})e^{-\frac{E_1}{\eta}t}
+\end{align*}
+\begin{align*}
+    \frac{\bar{\sigma}}{s\bar{\varepsilon}}=\frac{b+cs}{s+as^2}=\frac{1}{a}(\frac{ab}{s}+\frac{c-ab}{s+\frac{1}{a}})
+\end{align*}
+\begin{align*}
+    G_r(t)&=\frac{1}{a}(ab+(c-ab)e^{-\frac{1}{a}t})\\
+    &=\frac{E_1E}{E_1+E}+(E-\frac{E_1E}{E+E_1})e^{\frac{E+E_1}{\eta}t}
+\end{align*}
+(c)\\
+Coefficient of $J_c(t)$ and $G_r(t)$ are inverse to each other.
+
+\subsection{Frequency response of a 5 term analog model}
+(a)
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Hw_fig/Fig3_3.jpeg}
+\end{figure}
+\\
+(b)\\
+\begin{align*}
+G'(\omega)&=G_{\infty}+\sum_k\frac{G_k\omega^2\tau^2_k}{1+\omega^2\tau^2_k}\\
+    G'(\omega)&=C_r[10+\frac{200(\omega^2/4)}{1+\omega^2/4}+\frac{100\omega}{1+\omega^2}]\\
+    G''(w)&=\sum_k\frac{G_k\omega\tau_k}{1+\omega^2\tau^2_k}\\
+    G''(\omega)&=C_r[\frac{100\omega}{1+\omega^2/4}+\frac{100\omega}{1+\omega^2}]
+\end{align*}
+The loss tangent is:
+\begin{align*}
+    tan\delta(\omega)=\frac{G''}{G'}
+\end{align*}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Hw_fig/Fig3_3_2.png}
+\end{figure}
+\subsection{Fractional response}
+(a) step strain
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Hw_fig/Fig3_4_1.png}
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Hw_fig/Fig3_4_1_2.png}
+\end{figure}
+
+\newpage
+
+(b) step stress until $t=5$
+\begin{equation*}
+    \sigma(t)=\sigma_0 H(t)H(5-t)
+\end{equation*}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Hw_fig/Fig3_4_2.png}
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Hw_fig/Fig3_4_2_2.png}
+\end{figure}
+\newpage
+(c) consine pulse loading
+let
+\begin{equation*}
+    \sigma(t)=
+    \begin{cases}
+        \sigma_0\frac{1-cos(2\pi t/T_{load}}{2},\quad0\leq t \leq T_{load}\\
+        0,\quad t > T_{load}
+    \end{cases}
+\end{equation*}
+Use superposition:
+\begin{equation}
+    \sigma_n\approx\sum^n_{j=1}G_{n-j+1}\Delta\varepsilon_j, \quad\Delta\varepsilon_j\equiv\varepsilon_j-\varepsilon_{j-1}
+\end{equation}
+\begin{equation}
+    \Delta\varepsilon_n=\frac{\sigma_n-\sum^n_{j=1}G_{n-j+1}\Delta\varepsilon_j}{G_1},\quad\varepsilon_n=\varepsilon_{n-1}+\Delta\varepsilon_n
+\end{equation}
+Sample $\alpha$ with logits. Take integers $l\in\{-4,-3,...,3,4\}$
+\begin{align*}
+    \alpha=logis(l)=\frac{1}{1+e^{-l}}
+\end{align*}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Hw_fig/Fig3_4_3.png}
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Hw_fig/Fig3_4_3_2.png}
+\end{figure}
+\newpage
+\subsection{Rheology without a rheometer}
+(a)\\
+Gravitational potential per unit volume is
+\begin{align*}
+    \frac{E_{grav}}{V}=\rho gh_0
+\end{align*}
+and the fraction dissipated in teh first impact is $1-e^2$, where $e$ is the coefficient of restitution.
+\begin{align*}
+    \frac{E_{diss}}{V}&=\rho g h_0(1-e^2)\\
+    &=0.0981\rho(1-e^2)
+\end{align*}
+if $e =0.5:98.1(1-0.5^2)=73.6J/m^3$
+if $e =0.9:98.1(1-0.9^2)=18.6J/m^3$
+(b)\\
+\begin{align*}
+    \sigma(t)&=|E^{*}|Bsin(\omega t+\delta)\\
+    y(t)&=\frac{\sigma}{|E^{*}|}=Bsin(\omega t+\delta)=B[sin\omega tcos \delta+cos\omega tsin\delta]=\varepsilon cos\delta+Bsin\delta cos\omega t
+\end{align*}
+$\varepsilon cos\delta$ is the elastic term
+\begin{align*}
+    \frac{\omega_{el}}{|E^{*}|}=\int^\varepsilon_0 y_{el}d\varepsilon'=\int^\varepsilon_0 (\varepsilon'cos\delta)d\varepsilon'=\frac{1}{2}\varepsilon^2cos\delta
+\end{align*}
+Half-cycle occurs at $\varepsilon=B$
+\begin{align*}
+    \frac{\omega_{el,peak}}{|E^{*}|}=\frac{1}{2}B^2cos\delta\\
+    \rightarrow\omega_{el,peak}=\frac{1}{2}|E^{*}|cos\delta B^2
+\end{align*}
+(c)\\
+Half-cycle goes from $0 \rightarrow\pi$
+\begin{align*}
+    \omega_{diss}=|E^{*}|B^2\int^{\pi}_0sin(\theta+\delta)cos\theta d\theta=|E^{*}|B^2[\frac{\pi}{2}sin\delta]
+\end{align*}
+(d)\\
+\begin{align*}
+\frac{\omega_{diss}}{\omega_{el,peak}}=\pi\frac{E''}{E'}=\pi tan\delta
+\end{align*}
+Approximate $\omega_{diss}$ and $\omega_{el,peak}$
+\begin{align*}
+    \omega_{diss}&=\rho g(h_0-h)\\
+    \omega_{el,peak}&=\rho gh
+\end{align*}
+\begin{align*}
+    tan\delta=\frac{1}{\pi}\frac{\rho g(h_0-h)}{\rho gh}=\frac{2}{\pi}(\frac{h_0}{h}-1)
+\end{align*}
+(e)\\
+\begin{align*}
+    t_c&\approx0.025R\\
+    f_c&\approx1/t_c\approx40/R
+\end{align*}
+\begin{align*}
+    R&=1m:40Hz\\
+    R&=0.01:40kHz
+\end{align*}
+
+$\rightarrow f\in[40Hz,40kHz]$
+\end{document}
