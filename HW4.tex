@@ -1,0 +1,385 @@
+\documentclass{elsarticle}
+\input{instr-preamble}
+\input{instr-mathsymbols}
+
+\title{Your Paper}
+\author{You}
+
+\begin{document}
+\begin{center}
+    517 Mechanics of Soft Material HW3\\
+    26311207 Wen-Ning Wan
+\end{center}
+\section{Examples IV. 3D Time-dependent Behavior Examples}
+\subsection*{4--1. Convolutional integrals}
+
+For a cantilever under a uniform load $w$, the elastic tip deflection is
+%
+\begin{align*}
+u_{\max} = \frac{w L^{4}}{8 E I}.
+\end{align*}
+%
+In linear viscoelasticity:
+%
+\begin{align*}
+u_{\max}(t) = \frac{w L^{4}}{8 I}\ J_c(t) = CJ_c(t)
+\end{align*}
+Let
+\begin{align*}
+C = \frac{w L^{4}}{8 I}.
+\end{align*}
+
+
+Let $A = J_0 - J_\infty$.  
+%
+\begin{align*}
+0.60/C &= J_\infty + A e^{-30/\tau_c}\\
+0.75/C &= J_\infty + A e^{-60/\tau_c}\\
+1.00/C &= J_\infty
+\end{align*}
+%
+\begin{align*}
+-\frac{0.40}{C} = A e^{-30/\tau_c},
+\qquad
+-\frac{0.25}{C} = A e^{-60/\tau_c}
+\end{align*}
+
+\begin{align*}
+\frac{0.25/ C}{0.40/ C} = e^{-30/\tau_c}
+\quad\rightarrow\quad
+e^{-30/\tau_c} = 0.625
+\end{align*}
+\begin{align*}
+\tau_c = \frac{30}{|\ln(0.625)|} \approx 63.8\ \mathrm{min}.
+\end{align*}
+\begin{align*}
+A = -\frac{0.40}{C}\,\frac{1}{0.625}
+  = -\frac{0.64}{C}
+\end{align*}
+so
+\begin{align*}
+J_0 = J_\infty + A = \frac{1}{C} - \frac{0.64}{C} 
+     = \frac{0.36}{C}.
+\end{align*}
+
+\begin{align*}
+w = 3\ \mathrm{lb/ft} = 0.25\ \mathrm{lb/in}
+\end{align*}
+ $L = 48\ \mathrm{in}$.  
+\begin{align*}
+C = \frac{w L^4}{8I}
+  = \frac{0.25 \cdot 48^4}{8}
+  = 165{,}888
+\end{align*}
+
+Therefore,
+\begin{align*}
+J_\infty = \frac{1}{C}
+         = 6.03\times 10^{-6}\ \mathrm{in^2/lb}
+\end{align*}
+\begin{align*}
+J_0 = \frac{0.36}{C}
+     = 2.17\times 10^{-6}\ \mathrm{in^2/lb}
+\end{align*}
+\begin{align*}
+\tau_c \approx 63.8\ \mathrm{min}
+\end{align*}
+
+\begin{align*}
+\rightarrow
+J_c(t)
+= 6.0\times 10^{-6}
++ \left(2.2\times 10^{-6} - 6.0\times 10^{-6}\right)
+  e^{-t/63.8}
+\end{align*}
+\subsection*{4--2. Ramp up the torque}
+Torque applied to the cylinder is:
+\begin{align*}
+    T(t) = P_0 a(t) = P_0 \alpha t
+\end{align*}
+
+\begin{align*}
+    \phi(t)
+    = \frac{L}{J_p}\int_0^t J(t-\tau)\,\frac{dT(\tau)}{d\tau}\,d\tau.
+\end{align*}
+
+Since $\dfrac{dT(\tau)}{d\tau} = P_0\alpha$ is constant
+\begin{align*}
+    \phi(t)
+    &= \frac{P_0 \alpha L}{J_p}\int_0^t J(t-\tau)\,d\tau \\
+\end{align*}
+\subsection*{4--3. Ramp up the torque}
+
+(a)\\
+
+\begin{align*}
+    \varepsilon(t) = 
+    \int_0^t \frac{F(\tau)}{A}\, E_c(t-\tau)\, \mathrm{d}\tau
+\end{align*}
+
+\begin{align*}
+\rightarrow
+    \delta_{\mathrm{ax}}(t)
+    = L\,\varepsilon(t)
+    = \frac{L}{A}\int_0^t F(\tau)\,E_c(t-\tau)\,\mathrm{d}\tau
+\end{align*}
+
+Similarly, the shear stress is
+\begin{align*}
+    \tau(t) = \frac{F(t)}{A},
+\end{align*}
+\begin{align*}
+   \rightarrow \gamma(t)
+    =
+    \int_0^t \frac{F(\tau)}{A}\,\mu_c(t-\tau)\,\mathrm{d}\tau
+\end{align*}
+
+\begin{align*}
+    \rightarrow \delta_{\mathrm{sh}}(t)
+    =
+    L\,\gamma(t)
+    =
+    \frac{L}{A}\int_0^t F(\tau)\,\mu_c(t-\tau)\,\mathrm{d}\tau
+\end{align*}
+
+\begin{align*}
+    \rightarrow \delta_C(t)
+    =
+    \frac{L}{A}
+    \int_0^t F(\tau)\,\big[ E_c(t-\tau) + \mu_c(t-\tau) \big]\,\mathrm{d}\tau
+\end{align*}
+(b)\\
+\begin{align*}
+    V(t) = F(t), \qquad 
+    M(t) = F(t)\,L, \qquad 
+    N(t) \approx 0
+\end{align*}
+
+\begin{align*}
+    I_y = \frac{h^4}{12}.
+\end{align*}
+
+The normal stress:
+\begin{align*}
+    \sigma_{xx}(t,z)
+    =
+    -\frac{M(t)\,z}{I_y}.
+\end{align*}
+At the upper surface ($z = +h/2$),
+\begin{align*}
+    \sigma_{xx}(t)
+    =
+    -\frac{6\,F(t)\,L}{h^3}
+\end{align*}
+
+
+The transverse shear stress in a rectangular cross section is zero at the
+top and bottom surfaces:
+\begin{align*}
+    \tau_{xz}(t) = 0.
+\end{align*}
+\begin{align*}
+    \rightarrow\boldsymbol{\sigma}(t)
+    =
+    \begin{bmatrix}
+        -\dfrac{6F(t)L}{h^3} & 0 & 0 \\
+        0 & 0 & 0 \\
+        0 & 0 & 0
+    \end{bmatrix}
+\end{align*}
+
+\subsection*{4--4. Ramp up the torque}
+(a)\\
+Let $Q \in SO(3)$,
+\begin{align*}
+    \tilde{C} = \tilde{F}^T \tilde{F}
+              = (QF)^T (QF)
+              = F^T Q^T Q F
+              = C.
+\end{align*}
+Since $I_1(\tilde{C}) = I_1(C)$ and $I_a(\tilde{C},a_0) = I_a(C,a_0)$, the stored energy satisfies
+\begin{align*}
+    \phi(QF) = \phi(F)
+\end{align*}
+proving that the potential is frame-indifferent.
+
+(b)\\
+\begin{align*}
+    G = \{ H \in SO(3) : \phi(FH) = \phi(F)\ \text{for all } F \}
+\end{align*}
+\begin{align*}
+    &\tilde{F} = FH\\
+    &\tilde{C} = H^T C H
+\end{align*}
+The invariant $I_1$ remains unchanged for any $H \in SO(3)$ due to the cyclic property
+of the trace. For the fiber invariant,
+\begin{align*}
+    I_a(FH,a_0)
+    = a_0 \cdot (H^T C H) a_0
+    = (H a_0) \cdot C (H a_0)
+\end{align*}
+Requiring $I_a(FH,a_0) = I_a(F,a_0)$ for all symmetric positive-definite $C$
+implies that $H a_0 = \pm a_0$. Restricting to the connected component of $SO(3)$
+gives the material symmetry group
+\begin{align*}
+    G = \{\, H \in SO(3) : H a_0 = a_0 \,\}
+\end{align*}
+i.e.\ all rotations about the fiber direction $a_0$
+
+(c)\\
+\begin{align}
+    \frac{\partial I_1}{\partial F} &= 2F \\
+    \frac{\partial I_a}{\partial F} &= 2(F a_0 \otimes a_0)
+\end{align}
+
+\begin{align*}
+\rightarrow
+    P(F)
+    = C_{10} F
+    + k (I_a - 1)\, (F a_0 \otimes a_0)
+\end{align*}
+\begin{align*}
+    \sigma = \frac{1}{J} P F^T,
+\end{align*}
+\begin{align*}
+   \rightarrow \sigma(F)
+    = \frac{1}{J}
+      [
+         C_{10}\, b
+         + k (I_a - 1)\, (F a_0 \otimes F a_0)
+      ]
+\end{align*}
+\subsection*{4--5. Gent model of rubber elasticity}
+(a)\\
+Let
+\begin{align*}
+A = 1 - \frac{I_1 - 3}{J_m}
+\end{align*}
+\begin{align*}
+\phi_{\text{iso}} = -\frac{C_{10}}{2}J_m \ln A
+\end{align*}
+\begin{align*}
+\phi_1
+= -\frac{C_{10}}{2}J_m \cdot \frac{1}{A}
+\left(-\frac{1}{J_m}\right)
+= \frac{C_{10}}{2}\,\frac{1}{A}
+\end{align*}
+Since
+\begin{align*}
+A=\frac{J_m-(I_1-3)}{J_m}
+\end{align*}
+we obtain
+\begin{align*}
+2\phi_1
+=\frac{C_{10}J_m}{J_m-(I_1-3)}
+\end{align*}
+
+\begin{align*}
+\phi_2
+= \frac{\partial}{\partial I_2}
+\left[
+C_{01}\ln\left(\frac{I_2}{3}\right)
+\right]
+= \frac{C_{01}}{I_2}
+\end{align*}
+so that
+\begin{align*}
+2\phi_2 = \frac{2C_{01}}{I_2}
+\end{align*}
+
+Substituting into the general formula,
+\begin{align*}
+\boldsymbol{\sigma}
+= -p\,\mathbf{I}
++ \frac{C_{10}J_m}{J_m-(I_1-3)}\,\mathbf{B}
+- \frac{2C_{01}}{I_2}\,\mathbf{B}^{-1}
+\end{align*}
+(b)\\
+
+Let a incompressible simple shear deformation of magnitude $\gamma$:
+\begin{align*}
+\mathbf{F} =
+\begin{pmatrix}
+1 & \gamma & 0\\
+0 & 1 & 0\\
+0 & 0 & 1
+\end{pmatrix},
+\qquad
+\mathbf{B} = \mathbf{F}\mathbf{F}^T
+=
+\begin{pmatrix}
+1+\gamma^2 & \gamma & 0\\
+\gamma & 1 & 0\\
+0 & 0 & 1
+\end{pmatrix}.
+\end{align*}
+
+\begin{align*}
+I_1 = \mathrm{tr}\,\mathbf{B} = 3 + \gamma^2,
+\qquad
+I_2 = 3 + \gamma^2.
+\end{align*}
+
+\begin{align*}
+\mathbf{B}^{-1} =
+\begin{pmatrix}
+1 & -\gamma & 0\\
+-\gamma & 1+\gamma^2 & 0\\
+0 & 0 & 1
+\end{pmatrix},
+\end{align*}
+so
+\begin{align*}
+B_{12}=\gamma,
+\qquad
+(B^{-1})_{12}=-\gamma.
+\end{align*}
+
+For the Gent-type material with
+\begin{align*}
+\boldsymbol{\sigma}
+= -p\,\mathbf{I}
++ \frac{C_{10}J_m}{J_m-(I_1-3)}\,\mathbf{B}
+- \frac{2C_{01}}{I_2}\,\mathbf{B}^{-1},
+\end{align*}
+
+\begin{align*}
+\sigma_{12}
+= \frac{C_{10}J_m}{J_m-\gamma^2}\,B_{12}
+- \frac{2C_{01}}{I_2}(B^{-1})_{12}.
+\end{align*}
+Substituting $B_{12}=\gamma$, $(B^{-1})_{12}=-\gamma$,
+$I_1-3=\gamma^2$ and $I_2=3+\gamma^2$ gives
+\begin{align*}
+\sigma_{12}
+=\gamma\left[
+\frac{C_{10}J_m}{J_m-\gamma^2}
++ \frac{2C_{01}}{3+\gamma^2}
+\right].
+\end{align*}
+
+Shear modulus:
+Define the shear modulus as the $\gamma$–linear coefficient:
+\begin{align*}
+\mu(\gamma^2) = \frac{\sigma_{12}}{\gamma}
+= \frac{C_{10}J_m}{J_m-\gamma^2}
++ \frac{2C_{01}}{3+\gamma^2}.
+\end{align*}
+
+Taking the limit $\gamma\to 0$,
+\begin{align*}
+\lim_{\gamma\to 0} \mu(\gamma^2)
+= \frac{C_{10}J_m}{J_m}
++ \frac{2C_{01}}{3}
+= C_{10} + \frac{2}{3}C_{01}.
+\end{align*}
+
+\begin{align*}
+\displaystyle
+\lim_{\gamma\to 0} \mu(\gamma^2)
+= C_{10} + \frac{2}{3}C_{01}
+\end{align*}
+
+
+
+\end{document}
